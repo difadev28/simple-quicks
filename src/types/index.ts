@@ -27,3 +27,13 @@ export interface Conversation {
     lastMessage: Message;
     unread: boolean;
 }
+// ... existing code ...
+export interface Task {
+    id: number;
+    title: string;
+    description: string;
+    dueDate: string; // ISO string
+    completed: boolean;
+    category: 'My Task' | 'Personal Errands' | 'Urgent To Do';
+    tags?: string[]; // New Labels
+}
