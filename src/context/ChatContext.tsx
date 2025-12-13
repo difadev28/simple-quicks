@@ -7,7 +7,7 @@ interface ChatContextType {
     currentConversationId: number | null;
     setCurrentConversationId: (id: number | null) => void;
     messages: Record<number, Message[]>; // conversationId -> messages
-    sendMessage: (conversationId: number, text: string) => void;
+    sendMessage: (conversationId: number, text: string, replyTo?: Message['replyTo']) => void;
     deleteMessage: (conversationId: number, messageId: number) => void;
     editMessage: (conversationId: number, messageId: number, newText: string) => void;
     markConversationAsRead: (conversationId: number) => void;
@@ -118,13 +118,14 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const [messages, setMessages] = useState<Record<number, Message[]>>(INITIAL_MESSAGES);
     const [currentConversationId, setCurrentConversationId] = useState<number | null>(null);
 
-    const sendMessage = (conversationId: number, text: string) => {
+    const sendMessage = (conversationId: number, text: string, replyTo?: Message['replyTo']) => {
         const newMessage: Message = {
             id: Date.now(),
             conversationId,
             senderId: 'me',
             text,
-            timestamp: new Date().toISOString()
+            timestamp: new Date().toISOString(),
+            replyTo
         };
 
         setMessages(prev => ({

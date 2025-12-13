@@ -10,6 +10,11 @@ export interface Message {
     senderId: number | 'me';
     text: string;
     timestamp: string; // ISO string
+    replyTo?: {
+        id: number;
+        text: string;
+        senderName: string;
+    };
 }
 
 export interface Conversation {

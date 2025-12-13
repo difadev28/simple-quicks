@@ -4,6 +4,7 @@ import { useChat } from '../context/ChatContext';
 import {
     ArrowLeftIcon,
     EllipsisHorizontalIcon,
+    ArrowUturnLeftIcon,
     PencilSquareIcon,
     TrashIcon,
     XMarkIcon
@@ -27,6 +28,8 @@ const ChatDetail: React.FC = () => {
     const [editingMessageId, setEditingMessageId] = useState<number | null>(null);
     const [editInputText, setEditInputText] = useState('');
     const [activeMessageId, setActiveMessageId] = useState<number | null>(null);
+    const [replyingTo, setReplyingTo] = useState<{ id: number; text: string; senderName: string } | null>(null);
+
     // Capture the initial unread status to ensure we show the separator even if it gets marked read during the session
     const [initialUnreadStatus] = useState(() => {
         // We need to find the conversation manually here because 'conversation' variable is defined later
@@ -82,8 +85,9 @@ const ChatDetail: React.FC = () => {
 
     const handleSend = () => {
         if (!inputText.trim()) return;
-        sendMessage(conversationId, inputText);
+        sendMessage(conversationId, inputText, replyingTo ? { id: replyingTo.id, text: replyingTo.text, senderName: replyingTo.senderName } : undefined);
         setInputText('');
+        setReplyingTo(null);
     };
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -109,6 +113,11 @@ const ChatDetail: React.FC = () => {
     const cancelEdit = () => {
         setEditingMessageId(null);
         setEditInputText('');
+    };
+
+    const handleReply = (messageId: number, text: string, senderName: string) => {
+        setReplyingTo({ id: messageId, text, senderName });
+        setActiveMessageId(null);
     };
 
     const confirmDelete = (messageId: number) => {
@@ -282,7 +291,13 @@ const ChatDetail: React.FC = () => {
 
                                                     {/* Active Options Menu */}
                                                     {activeMessageId === msg.id && (
-                                                        <div className={`absolute top-6 ${isMe ? 'right-full mr-2' : 'left-full ml-2'} bg-white shadow-xl border border-slate-100 rounded-lg py-1 z-30 min-w-[100px] flex flex-col`}>
+                                                        <div className={`absolute top-6 ${isMe ? 'right-full mr-2' : 'left-full ml-2'} bg-white shadow-xl border border-slate-100 rounded-lg py-1 z-30 min-w-[120px] flex flex-col`}>
+                                                            <button
+                                                                onClick={() => handleReply(msg.id, msg.text, isMe ? 'You' : senderName)}
+                                                                className="px-3 py-2 text-left text-xs font-medium text-slate-700 hover:bg-slate-50 flex items-center gap-2"
+                                                            >
+                                                                <ArrowUturnLeftIcon className="w-3.5 h-3.5" /> Reply
+                                                            </button>
                                                             {isMe && (
                                                                 <button
                                                                     onClick={() => startEditing(msg.id, msg.text)}
@@ -309,6 +324,13 @@ const ChatDetail: React.FC = () => {
                                                             }
                                                         `}
                                                     >
+                                                        {msg.replyTo && (
+                                                            <div className={`mb-2 p-2 rounded bg-opacity-50 text-xs border-l-2 ${isMe ? 'bg-purple-100 border-purple-400' : 'bg-orange-100 border-orange-400'}`}>
+                                                                <span className="font-bold block mb-0.5">{msg.replyTo.senderName}</span>
+                                                                <span className="italic truncate line-clamp-1">{msg.replyTo.text}</span>
+                                                            </div>
+                                                        )}
+
                                                         {isEditing ? (
                                                             <div className="min-w-[200px]">
                                                                 <textarea
@@ -351,8 +373,28 @@ const ChatDetail: React.FC = () => {
             </div>
 
             {/* Input */}
-            <div className="p-4 bg-white border-t border-slate-100">
-                <div className="flex gap-2">
+            <div className="bg-white border-t border-slate-100 relative">
+                {/* Reply Preview Popup */}
+                {replyingTo && (
+                    <div className="absolute bottom-full left-0 right-0 bg-slate-50 border-t border-slate-200 p-3 flex justify-between items-start z-10 shadow-sm">
+                        <div className="flex flex-col max-w-[90%]">
+                            <span className="text-xs font-bold text-slate-700 flex items-center gap-1 mb-1">
+                                Replying to {replyingTo.senderName}
+                            </span>
+                            <p className="text-xs text-slate-500 truncate line-clamp-1 italic border-l-2 border-slate-300 pl-2">
+                                "{replyingTo.text}"
+                            </p>
+                        </div>
+                        <button
+                            onClick={() => setReplyingTo(null)}
+                            className="text-slate-400 hover:text-slate-600 p-1"
+                        >
+                            <XMarkIcon className="w-5 h-5" />
+                        </button>
+                    </div>
+                )}
+
+                <div className="p-4 flex gap-2">
                     <input
                         type="text"
                         className="flex-1 border border-slate-300 rounded-md px-4 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 placeholder-slate-400"
