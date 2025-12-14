@@ -1,8 +1,41 @@
 @import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 
+/* ================================
+   Base Color Tokens
+================================ */
 @theme {
     --font-sans: "Lato", sans-serif;
+    /* ---------- Primary ---------- */
+    --color-primary-blue: #2F80ED;
+    --color-primary-dark: #4F4F4F;
+    --color-primary-gray: #828282;
+    --color-primary-light: #E0E0E0;
+
+    /* ---------- Indicator ---------- */
+    --color-indicator-orange: #F8B76B;
+    --color-indicator-purple: #8785FF;
+    --color-indicator-red: #EB5757;
+    --color-indicator-yellow: #F2C94C;
+
+    /* ---------- Chats ---------- */
+    --color-chat-yellow-bg: #FCEED3;
+    --color-chat-yellow-accent: #E5A443;
+
+    --color-chat-purple-bg: #EEDCFF;
+    --color-chat-purple-accent: #9B51E0;
+
+    --color-chat-green-bg: #D2F2EA;
+    --color-chat-green-accent: #43B78D;
+
+    /* ---------- Stickers ---------- */
+    --color-sticker-blue: #E9F3FF;
+    --color-sticker-orange: #FDCA4A;
+    --color-sticker-yellow: #F9E9C3;
+    --color-sticker-mint: #AFEDDB;
+    --color-sticker-green: #CBF1C2;
+    --color-sticker-purple: #CFCFF9;
+    --color-sticker-pink: #F9E0FD;
 }
 
 body {

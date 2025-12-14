@@ -10,60 +10,73 @@ interface ChatListItemProps {
 export const ChatListItem: React.FC<ChatListItemProps> = ({ conversation, formatTime }) => {
     const isGroup = conversation.type === 'group';
     const title = isGroup ? conversation.title : conversation.user?.name;
-    const avatar = isGroup ? 'https://ui-avatars.com/api/?name=Group&background=random' : conversation.user?.avatar;
+    const avatar = isGroup ? '/logo/groups.svg' : conversation.user?.avatar;
 
-    let lastMessageText = conversation.lastMessage.text;
+    let lastMessageText = (
+        <div className='flex justify-between'>
+            <p className="text-xs text-primary-gray">{conversation.lastMessage.text}</p>
+            {conversation.unread && (
+                <div className="flex flex-col items-end justify-center">
+                    <span className="inline-flex items-center w-2 h-2 rounded-full  bg-indicator-red "> </span>
+                </div>
+            )}
+        </div>
+    );
     if (isGroup && conversation.lastMessage.senderId !== 'me') {
         const sender = conversation.participants?.find(p => p.id === conversation.lastMessage.senderId);
         if (sender) {
-            lastMessageText = `${sender.name}: ${lastMessageText}`;
+            lastMessageText = (
+                <div className="flex flex-col space-x-2">
+                    <p className="text-xs text-primary-dark">{sender.name}:</p>
+                    <div className="flex items-center justify-between">
+                        <p className="text-xs text-primary-gray">{conversation.lastMessage.text}</p>
+                        {conversation.unread && (
+                            <div className="flex flex-col items-end justify-center">
+                                <span className="inline-flex items-center w-2 h-2 rounded-full  bg-indicator-red "> </span>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
         }
     }
 
     return (
-        <li>
+        <li className="border-b border-primary-gray last:border-b-0 mx-4">
             <NavLink
                 to={`/chat/${conversation.id}`}
                 className={({ isActive }) =>
-                    `block p-3 rounded-2xl transition-all duration-200 hover:bg-slate-50 ${isActive ? 'bg-purple-50' : ''}`
+                    `rounded-2xl transition-all duration-200 hover:bg-slate-50  ${isActive ? 'bg-purple-50' : ''}`
                 }
             >
-                <div className="flex items-center space-x-4">
+                <div className="flex space-x-4  pb-4 mt-3">
                     <div className="relative flex-shrink-0">
                         {isGroup ? (
-                            <div className="h-12 w-12 rounded-full bg-slate-200 flex items-center justify-center text-slate-500 font-bold text-xs border border-slate-100 shadow-sm">
-                                GRP
-                            </div>
-                        ) : (
                             <img
-                                className="h-12 w-12 rounded-full object-cover border border-slate-100 shadow-sm"
+                                className="h-7 w-10.5 object-cover"
                                 src={avatar}
                                 alt={title}
                             />
+                        ) : (
+                            <div className="h-7 w-7 rounded-full bg-primary-blue flex items-center ml-2.5 justify-center text-primary-light font-bold text-xs shadow-sm">
+                                {conversation.user?.name.substring(0, 1).toUpperCase()}
+                            </div>
                         )}
                     </div>
                     <div className="flex-1 min-w-0">
-                        <div className="flex justify-between items-baseline mb-1">
-                            <p className="text-sm font-bold text-slate-800 truncate">
+                        <div className="flex gap-3 items-baseline mb-1">
+                            <p className="text-sm font-bold text-primary-blue line-clamp-2 max-w-[414px]">
                                 {title}
                             </p>
-                            <p className="text-[11px] text-slate-400">
+                            <p className="text-[11px] text-primary-gray">
                                 {formatTime(conversation.lastMessage.timestamp)}
                             </p>
                         </div>
-                        <p className="text-xs text-slate-500 truncate pr-4 leading-relaxed">
+                        <p className="text-xs truncate  leading-relaxed">
                             {lastMessageText}
                         </p>
                     </div>
 
-                    {/* Unread/New Indicator */}
-                    {conversation.unread && (
-                        <div className="flex flex-col items-end justify-center">
-                            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-red-50 text-red-600 uppercase tracking-wide">
-                                New
-                            </span>
-                        </div>
-                    )}
                 </div>
             </NavLink>
         </li>

@@ -46,7 +46,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
         <React.Fragment>
             {showNewMessageSeparator && (
                 <div className="flex justify-center my-4">
-                    <span className="bg-red-50 text-red-500 px-4 py-1 rounded-full font-bold text-xs shadow-sm">
+                    <span className="bg-sticker-blue text-primary-blue px-4 py-1 rounded-sm font-bold text-xs shadow-sm">
                         New Message
                     </span>
                 </div>
@@ -54,11 +54,9 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
 
             <div className={`flex flex-col ${isMe ? 'items-end' : 'items-start'} mb-4 group`}>
                 {/* Message Header (Name) for others */}
-                {!isMe && (
-                    <span className={`font-bold text-xs mb-1 ml-1 cursor-default ${conversationType === 'group' ? 'text-orange-400' : 'text-slate-500'}`}>
-                        {senderName}
-                    </span>
-                )}
+                <span className={`font-bold text-xs mb-1 ml-1 cursor-default ${conversationType === 'group' && !isMe ? 'text-orange-400' : isMe ? 'text-purple-400' : 'text-slate-500'}`}>
+                    {isMe ? 'You' : senderName}
+                </span>
 
                 <div className="flex items-end max-w-[85%] relative">
                     {/* Options Button */}
@@ -67,7 +65,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
                             e.stopPropagation();
                             setActiveMessageId(activeMessageId === msg.id ? null : msg.id);
                         }}
-                        className={`absolute top-0 ${isMe ? '-left-8' : '-right-8'} p-1 text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity`}
+                        className={`absolute top-0 ${isMe ? '-left-8' : '-right-8'} p-1 text-slate-400 opacity-100 transition-opacity`}
                     >
                         <EllipsisHorizontalIcon className="w-5 h-5" />
                     </button>
@@ -100,10 +98,12 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
 
                     {/* Bubble */}
                     <div
-                        className={`px-4 py-3 rounded-tr-2xl rounded-tl-2xl shadow-sm text-[13px] leading-relaxed text-slate-800
+                        className={`px-4 py-3 rounded-tr-md rounded-tl-md shadow-sm text-[13px] leading-relaxed text-primary-dark
                             ${isMe
-                                ? 'bg-[#E5D4FF] rounded-bl-2xl rounded-br-none'
-                                : 'bg-[#FDF1D6] rounded-br-2xl rounded-bl-none'
+                                ? 'bg-[#E5D4FF] rounded-bl-md rounded-br-none'
+                                : conversationType === 'group'
+                                    ? 'bg-[#FDF1D6] rounded-br-md rounded-bl-none'
+                                    : 'bg-[#F8F8F8] rounded-br-md rounded-bl-none'
                             }
                         `}
                     >
@@ -130,19 +130,13 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
                         ) : (
                             <>
                                 {msg.text}
-                                <div className={`text-[10px] mt-2 font-medium ${isMe ? 'text-purple-400' : 'text-slate-400'} text-right`}>
+                                <div className={`text-[10px] mt-1 font-medium text-primary-gray text-left`}>
                                     {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}
                                 </div>
                             </>
                         )}
                     </div>
                 </div>
-
-                {isMe && (
-                    <span className="text-purple-400 font-bold text-xs mt-1 mr-1">
-                        You
-                    </span>
-                )}
             </div>
         </React.Fragment>
     );

@@ -6,7 +6,7 @@ interface ChatContextType {
     users: User[]; // Cache of users
     currentConversationId: number | null;
     setCurrentConversationId: (id: number | null) => void;
-    messages: Record<number, Message[]>; // conversationId -> messages
+    messages: Record<number, Message[]>;
     sendMessage: (conversationId: number, text: string, replyTo?: Message['replyTo']) => void;
     deleteMessage: (conversationId: number, messageId: number) => void;
     editMessage: (conversationId: number, messageId: number, newText: string) => void;
@@ -29,8 +29,8 @@ const MOCK_CONVERSATIONS: Conversation[] = [
     {
         id: 101,
         type: 'group',
-        title: 'I-589 - AMARKHIL, Obaidullah',
-        participants: [MOCK_USERS[0], MOCK_USERS[1]], // Mary and Obaidullah
+        title: 'Jeannette Moraima Guaman Chamba (Hutto I-589) [Hutto Follow Up - Brief Service]',
+        participants: [MOCK_USERS[0], MOCK_USERS[1]],
         lastMessage: {
             id: 10,
             conversationId: 101,
@@ -38,7 +38,7 @@ const MOCK_CONVERSATIONS: Conversation[] = [
             text: 'Sure thing, Claren.',
             timestamp: new Date().toISOString()
         },
-        unread: true // This one has "New" indicator in list, and new messages inside
+        unread: true
     },
     {
         id: 102,

@@ -86,7 +86,7 @@ export const MessageList: React.FC<MessageListProps> = ({
                             <div className="absolute inset-0 flex items-center">
                                 <div className="w-full border-t border-slate-300"></div>
                             </div>
-                            <span className="relative px-4 text-xs font-bold text-slate-500 bg-white capitalize">
+                            <span className="relative px-4 text-xs font-bold text-primary-dark bg-white capitalize">
                                 {dateLabel}
                             </span>
                         </div>
