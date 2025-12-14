@@ -32,20 +32,15 @@ export const useTasks = () => {
         setTasks(prev => prev.map(t => t.id === id ? { ...t, completed: newStatus } : t));
 
         // For local tasks (created via New Task, ID is timestamp), don't call API
-        // JSONPlaceholder only supports IDs 1-200.
-        if (id > 1000) return;
+        // JSONPlaceholder only supports IDs 1-200. We assume IDs > 1000 are local.
+        const isLocalTask = (taskId: number) => taskId > 1000;
+
+        if (isLocalTask(id)) return;
 
         try {
             await taskApi.updateStatus(id, newStatus);
         } catch (error) {
             console.error("Failed to update status", error);
-            // Revert only if we want strict consistency, but for this demo 
-            // and mixed local/server data, reverting causes "flicker" on failure.
-            // Let's keep the optimistic state to satisfy "smpet work lalu tiba ga completed lagi"
-            // Or better, handle the error gracefully without reverting if it's a known limitation.
-            // However, sticking to the user's request, preventing the 'revert' is key.
-            // commenting out revert for now or making it smarter.
-            // setTasks(prev => prev.map(t => t.id === id ? { ...t, completed: !newStatus } : t));
         }
     };
 

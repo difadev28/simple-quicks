@@ -11,6 +11,7 @@ import {
 } from '@heroicons/react/24/outline';
 import { AVAILABLE_TAGS } from '../../constants/taskConstants';
 import { getDaysLeft, getTagStyle, formatDateMonth } from '../../utils/taskUtils';
+import { useClickOutside } from '../../hooks/useClickOutside';
 import type { Task } from '../../types';
 
 interface TaskItemProps {
@@ -49,23 +50,11 @@ export const TaskItem: React.FC<TaskItemProps> = ({
     onToggleTag
 }) => {
     const daysLeft = getDaysLeft(task.dueDate);
-    const tagPopupRef = React.useRef<HTMLDivElement>(null);
 
-    React.useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (tagPopupRef.current && !tagPopupRef.current.contains(event.target as Node)) {
-                onToggleTagPopup();
-            }
-        };
-
-        if (isTagPopupOpen) {
-            document.addEventListener('mousedown', handleClickOutside);
-        }
-
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, [isTagPopupOpen, onToggleTagPopup]);
+    const tagPopupRef = useClickOutside<HTMLDivElement>(
+        () => onToggleTagPopup(),
+        isTagPopupOpen
+    );
 
     // Handle Title Change inside the component to avoid input lag if needed, or direct prop
     // Direct prop with optimistic update in hook is fast enough usually.
