@@ -115,7 +115,7 @@ export const NewTaskForm: React.FC<NewTaskFormProps> = ({ onCancel, onCreate }) 
                                         className={`px-3 py-1 rounded text-[10px] font-bold border transition-colors
                                             ${tags.includes(tag)
                                                 ? getTagStyle(tag) + ' border-transparent ring-1 ring-offset-1 ring-slate-300'
-                                                : 'bg-slate-50 text-slate-500 border-slate-200 hover:bg-slate-100'
+                                                : 'bg-slate-50 text-primary-dark border-slate-200 hover:bg-slate-100'
                                             }
                                         `}
                                     >
@@ -130,7 +130,7 @@ export const NewTaskForm: React.FC<NewTaskFormProps> = ({ onCancel, onCreate }) 
                 <div className="flex justify-end gap-2 pt-2">
                     <button
                         onClick={onCancel}
-                        className="px-4 py-2 text-sm font-bold text-slate-500 hover:text-slate-700"
+                        className="px-4 py-2 text-sm font-bold text-primary-dark hover:text-slate-700"
                     >
                         Cancel
                     </button>

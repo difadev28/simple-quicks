@@ -27,7 +27,7 @@ export const taskApi = {
             completed: todo.completed,
             dueDate: generateRandomDate(),
             description: Math.random() > 0.5
-                ? 'No Description'
+                ? ''
                 : 'Auto generated description for ' + todo.title,
             category: CATEGORIES[Math.floor(Math.random() * CATEGORIES.length)],
             tags: Math.random() > 0.7 ? ['#priority'] : [],

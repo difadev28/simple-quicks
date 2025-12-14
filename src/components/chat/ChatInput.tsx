@@ -28,18 +28,18 @@ export const ChatInput: React.FC<ChatInputProps> = ({
             {replyingTo && (
                 <div className="absolute bottom-full left-0 right-0 bg-slate-50 border-t border-slate-200 p-3 flex justify-between items-start z-10 shadow-sm">
                     <div className="flex flex-col max-w-[90%]">
-                        <span className="text-xs font-bold text-slate-700 flex items-center gap-1 mb-1">
+                        <span className="text-xs text-primary-dark font-bold flex items-center gap-1 mb-1">
                             Replying to {replyingTo.senderName}
                         </span>
-                        <p className="text-xs text-slate-500 truncate line-clamp-1 italic border-l-2 border-slate-300 pl-2">
-                            "{replyingTo.text}"
+                        <p className="text-xs text-primary-dark">
+                            {replyingTo.text}
                         </p>
                     </div>
                     <button
                         onClick={onCancelReply}
                         className="text-slate-400 hover:text-slate-600 p-1"
                     >
-                        <XMarkIcon className="w-5 h-5" />
+                        <XMarkIcon className="w-5 h-5 text-primary-dark" />
                     </button>
                 </div>
             )}

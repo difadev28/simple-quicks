@@ -34,7 +34,7 @@ const TaskPage: React.FC = () => {
     };
 
     return (
-        <div className="flex flex-col h-full bg-slate-50 relative" onClick={handleBackdropClick}>
+        <div className="flex flex-col h-full bg-white relative" onClick={handleBackdropClick}>
             <TaskHeader
                 filter={filter}
                 setFilter={setFilter}

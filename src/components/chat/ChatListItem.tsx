@@ -12,34 +12,30 @@ export const ChatListItem: React.FC<ChatListItemProps> = ({ conversation, format
     const title = isGroup ? conversation.title : conversation.user?.name;
     const avatar = isGroup ? '/logo/groups.svg' : conversation.user?.avatar;
 
-    let lastMessageText = (
-        <div className='flex justify-between'>
-            <p className="text-xs text-primary-gray">{conversation.lastMessage.text}</p>
+    const lastMessageText = (
+        <div className='flex items-center justify-between w-full'>
+            {isGroup && conversation.lastMessage.senderId !== 'me' ? (
+                <div className="flex space-x-1 overflow-hidden">
+                    <span className="text-primary-dark font-bold shrink-0">
+                        {conversation.participants?.find(p => p.id === conversation.lastMessage.senderId)?.name}:
+                    </span>
+                    <p className="text-primary-gray truncate">
+                        {conversation.lastMessage.text}
+                    </p>
+                </div>
+            ) : (
+                <p className="text-primary-gray truncate">
+                    {conversation.lastMessage.text}
+                </p>
+            )}
+
             {conversation.unread && (
-                <div className="flex flex-col items-end justify-center">
-                    <span className="inline-flex items-center w-2 h-2 rounded-full  bg-indicator-red "> </span>
+                <div className="ml-2 shrink-0">
+                    <span className="inline-block w-2.5 h-2.5 rounded-full bg-[#EB5757]"></span>
                 </div>
             )}
         </div>
     );
-    if (isGroup && conversation.lastMessage.senderId !== 'me') {
-        const sender = conversation.participants?.find(p => p.id === conversation.lastMessage.senderId);
-        if (sender) {
-            lastMessageText = (
-                <div className="flex flex-col space-x-2">
-                    <p className="text-xs text-primary-dark">{sender.name}:</p>
-                    <div className="flex items-center justify-between">
-                        <p className="text-xs text-primary-gray">{conversation.lastMessage.text}</p>
-                        {conversation.unread && (
-                            <div className="flex flex-col items-end justify-center">
-                                <span className="inline-flex items-center w-2 h-2 rounded-full  bg-indicator-red "> </span>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            );
-        }
-    }
 
     return (
         <li className="border-b border-primary-gray last:border-b-0 mx-4">
@@ -58,7 +54,7 @@ export const ChatListItem: React.FC<ChatListItemProps> = ({ conversation, format
                                 alt={title}
                             />
                         ) : (
-                            <div className="h-7 w-7 rounded-full bg-primary-blue flex items-center ml-2.5 justify-center text-primary-light font-bold text-xs shadow-sm">
+                            <div className="h-8 w-8 rounded-full bg-primary-blue flex items-center ml-2.5 justify-center text-primary-light font-bold text-xs shadow-sm">
                                 {conversation.user?.name.substring(0, 1).toUpperCase()}
                             </div>
                         )}
@@ -72,9 +68,9 @@ export const ChatListItem: React.FC<ChatListItemProps> = ({ conversation, format
                                 {formatTime(conversation.lastMessage.timestamp)}
                             </p>
                         </div>
-                        <p className="text-xs truncate  leading-relaxed">
+                        <div className="text-xs leading-relaxed">
                             {lastMessageText}
-                        </p>
+                        </div>
                     </div>
 
                 </div>

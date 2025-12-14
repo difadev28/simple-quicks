@@ -89,7 +89,7 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
             // Replace temp message with real API message (if ID or content changed)
             setMessages(prev => ({
                 ...prev,
-                [conversationId]: prev[conversationId].map(m => m.id === tempId ? apiMessage : m)
+                [conversationId]: prev[conversationId].map(m => m.id === tempId ? { ...apiMessage, replyTo } : m)
             }));
         } catch (error) {
             console.error("Failed to send message", error);
