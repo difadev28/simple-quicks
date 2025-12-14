@@ -11,6 +11,7 @@ interface TaskListProps {
     onDelete: (id: number) => void;
     onUpdateDate: (id: number, date: string) => void;
     onUpdateDescription: (id: number, desc: string) => void;
+    onUpdateTitle: (id: number, title: string) => void;
     onToggleTag: (id: number, tag: string) => void;
 }
 
@@ -22,6 +23,7 @@ export const TaskList: React.FC<TaskListProps> = ({
     onDelete,
     onUpdateDate,
     onUpdateDescription,
+    onUpdateTitle,
     onToggleTag
 }) => {
     // UI State managed here nicely for the list items exclusive states
@@ -29,6 +31,14 @@ export const TaskList: React.FC<TaskListProps> = ({
     const [activeMenuTaskId, setActiveMenuTaskId] = useState<number | null>(null);
     const [activeTagPopupId, setActiveTagPopupId] = useState<number | null>(null);
     const [editingDescriptionId, setEditingDescriptionId] = useState<number | null>(null);
+
+    // Auto-expand new tasks (empty title)
+    React.useEffect(() => {
+        const newBlankTask = tasks.find(t => !t.title && !t.completed);
+        if (newBlankTask && expandedTaskId !== newBlankTask.id) {
+            setExpandedTaskId(newBlankTask.id);
+        }
+    }, [tasks]);
 
     const toggleExpand = (id: number) => {
         setExpandedTaskId(expandedTaskId === id ? null : id);
@@ -63,9 +73,15 @@ export const TaskList: React.FC<TaskListProps> = ({
         );
     }
 
+    // Sort tasks: Incomplete first, Completed last
+    const sortedTasks = [...tasks].sort((a, b) => {
+        if (a.completed === b.completed) return 0;
+        return a.completed ? 1 : -1;
+    });
+
     return (
-        <div className="space-y-4 pb-20"> {/* pb-20 for bottom safe area if needed */}
-            {tasks.map(task => (
+        <div className="space-y-4"> {/* pb-20 for bottom safe area if needed */}
+            {sortedTasks.map(task => (
                 <TaskItem
                     key={task.id}
                     task={task}
@@ -81,6 +97,7 @@ export const TaskList: React.FC<TaskListProps> = ({
                     onDelete={() => onDelete(task.id)}
                     onUpdateDate={(date) => onUpdateDate(task.id, date)}
                     onUpdateDescription={(desc) => onUpdateDescription(task.id, desc)}
+                    onUpdateTitle={(title) => onUpdateTitle(task.id, title)}
                     onToggleTag={(tag) => onToggleTag(task.id, tag)}
                 />
             ))}

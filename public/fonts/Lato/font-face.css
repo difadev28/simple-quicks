@@ -1,0 +1,17 @@
+ /* Regular variants */
+ @font-face {
+   font-family: 'Lato';
+   font-style: normal;
+   src: local('Lato Regular'), local('Lato-Regular'),
+     url('./Lato-Regular.ttf') format('truetype');
+   font-display: swap;
+ }
+
+ /* Bold variants */
+ @font-face {
+   font-family: 'Lato-Bold';
+   font-style: normal;
+   src: local('Lato Bold'), local('Lato-Bold'),
+     url('./Lato-Bold.ttf') format('truetype');
+   font-display: swap;
+ }

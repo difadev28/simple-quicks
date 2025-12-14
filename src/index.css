@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+@import "../public/fonts/Lato/font-face.css";
 
 /* ================================
    Base Color Tokens
@@ -38,6 +38,14 @@
     --color-sticker-pink: #F9E0FD;
 }
 
+.font-lato-regular {
+    font-family: 'Lato', sans-serif;
+}
+
+.font-lato-bold {
+    font-family: 'Lato-Bold', sans-serif;
+}
+
 body {
-    font-family: var(--font-sans);
+    font-family: 'Lato', sans-serif !important;
 }
