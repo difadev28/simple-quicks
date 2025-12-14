@@ -1,20 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useChat } from '../context/ChatContext';
 import { ChatListHeader } from '../components/chat/ChatListHeader';
 import { ChatListItem } from '../components/chat/ChatListItem';
 import { Loader } from '../components/common/Loader';
 
 const ChatList: React.FC = () => {
-    const { conversations } = useChat();
+    const { conversations, isLoading } = useChat();
     const [searchTerm, setSearchTerm] = useState('');
-    const [isLoading, setIsLoading] = useState(true);
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setIsLoading(false);
-        }, 1000); // 1 second delay
-        return () => clearTimeout(timer);
-    }, []);
 
     const filteredConversations = conversations.filter(c => {
         const nameToSearch = c.type === 'group' ? c.title : c.user?.name;

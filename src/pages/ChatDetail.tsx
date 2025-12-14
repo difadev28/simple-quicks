@@ -4,6 +4,7 @@ import { useChat } from '../context/ChatContext';
 import { ChatHeader } from '../components/chat/ChatHeader';
 import { MessageList } from '../components/chat/MessageList';
 import { ChatInput } from '../components/chat/ChatInput';
+import { Loader } from '../components/common/Loader';
 
 const ChatDetail: React.FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -16,7 +17,8 @@ const ChatDetail: React.FC = () => {
         deleteMessage,
         editMessage,
         setCurrentConversationId,
-        markConversationAsRead
+        markConversationAsRead,
+        isLoading
     } = useChat();
 
     const [inputText, setInputText] = useState('');
@@ -86,6 +88,10 @@ const ChatDetail: React.FC = () => {
         }
         setActiveMessageId(null);
     };
+
+    if (isLoading) {
+        return <Loader text="Loading Conversation..." />;
+    }
 
     if (!conversation) {
         return <div className="p-10 text-center">Conversation not found</div>;

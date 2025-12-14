@@ -9,7 +9,7 @@ import {
     TagIcon
 } from '@heroicons/react/24/outline';
 import { AVAILABLE_TAGS } from '../../constants/taskConstants';
-import { getDaysLeft, formatDateLabel, getTagStyle } from '../../utils/taskUtils';
+import { getDaysLeft, formatDateLabel, getTagStyle, getDueStatus } from '../../utils/taskUtils';
 import type { Task } from '../../types';
 
 interface TaskItemProps {
@@ -46,8 +46,8 @@ export const TaskItem: React.FC<TaskItemProps> = ({
     onToggleTag
 }) => {
     const daysLeft = getDaysLeft(task.dueDate);
-    const isOverdue = daysLeft === 'Overdue';
-    const daysLeftColor = isOverdue ? 'text-red-500' : (daysLeft === 'Today' || daysLeft === 'Tomorrow' ? 'text-orange-500' : 'text-slate-500');
+    const status = getDueStatus(task.dueDate);
+    const daysLeftColor = status === 'overdue' ? 'text-red-500' : (status === 'soon' ? 'text-orange-500' : 'text-slate-500');
 
     return (
         <div className="bg-white rounded-lg shadow-sm border border-slate-200 transition-all duration-200">
