@@ -283,14 +283,7 @@ npm run build
 ```
 
 The build artifacts will be stored in the `dist/` directory.
-
-### Deploy to Vercel
-
-```bash
-npm install -g vercel
-vercel --prod
-```
-
+ 
 ### Deploy to Netlify
 
 ```bash
@@ -336,17 +329,7 @@ npm run prepare  # Install hooks
 1. **TypeScript errors**: Run `npm run build` to check for type errors
 2. **Import errors**: Ensure path aliases are configured correctly
 3. **Build issues**: Clear the build cache: `rm -rf node_modules/.cache`
-
-### Getting Help
-
-- Open an issue on GitHub
-- Check the [documentation](./docs/)
-- Review the [Clean Architecture guide](./CLEAN_ARCHITECTURE.md)
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
+ 
 ## 🙏 Acknowledgments
 
 - Uncle Bob (Robert C. Martin) for Clean Architecture principles
