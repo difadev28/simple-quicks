@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Task, CreateTaskRequest, TaskFilters } from '@/domain/task/task.entity';
-import { Result } from '@/domain/common/result';
+import { Task, CreateTaskRequest, TaskFilters } from '@/domain/task/task.entity'; 
 import { getTasksUseCase, createTaskUseCase, toggleTaskUseCase } from '@/infrastructure/di/container';
 
 export function useTasksClean(filters?: TaskFilters) {

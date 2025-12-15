@@ -1,9 +1,6 @@
 import React from 'react';
 import {
-    EllipsisHorizontalIcon,
-    ArrowUturnLeftIcon,
-    PencilSquareIcon,
-    TrashIcon
+    EllipsisHorizontalIcon
 } from '@heroicons/react/24/outline';
 import type { Message } from '../../types';
 

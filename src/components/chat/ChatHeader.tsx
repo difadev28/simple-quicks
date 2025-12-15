@@ -8,7 +8,7 @@ interface ChatHeaderProps {
     onClose?: () => void;
 }
 
-export const ChatHeader: React.FC<ChatHeaderProps> = ({ conversation, onBack, onClose }) => {
+export const ChatHeader: React.FC<ChatHeaderProps> = ({ conversation, onBack }) => {
     return (
         <header className="px-4 py-3 border-b border-slate-100 flex items-center justify-between bg-white z-20 shadow-sm sticky top-0">
             <div className="flex items-center gap-3">

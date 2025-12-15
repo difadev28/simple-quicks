@@ -3,10 +3,8 @@ import {
     ChevronDownIcon,
     EllipsisHorizontalIcon,
     ClockIcon,
-    PencilIcon,
-    TrashIcon,
-    CheckIcon,
-    TagIcon,
+    PencilIcon, 
+    CheckIcon, 
     BookmarkIcon
 } from '@heroicons/react/24/outline';
 import { AVAILABLE_TAGS } from '../../constants/taskConstants';

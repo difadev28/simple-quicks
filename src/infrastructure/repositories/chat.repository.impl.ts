@@ -12,7 +12,7 @@ export class ChatRepository implements IChatRepository {
     });
   }
 
-  async getConversations(userId?: number): Promise<Result<Conversation[]>> {
+  async getConversations(_userId?: number): Promise<Result<Conversation[]>> {
     try {
       // Mock implementation since the API doesn't have conversations endpoint
       const mockConversations: Conversation[] = [
@@ -109,7 +109,7 @@ export class ChatRepository implements IChatRepository {
     }
   }
 
-  async createConversation(request: CreateConversationRequest): Promise<Result<Conversation>> {
+  async createConversation(_request: CreateConversationRequest): Promise<Result<Conversation>> {
     try {
       // Mock implementation
       const newConversation: Conversation = {
@@ -126,7 +126,7 @@ export class ChatRepository implements IChatRepository {
     }
   }
 
-  async markAsRead(conversationId: number, userId: number): Promise<Result<void>> {
+  async markAsRead(_conversationId: number, _userId: number): Promise<Result<void>> {
     try {
       // Mock implementation
       return success(undefined);

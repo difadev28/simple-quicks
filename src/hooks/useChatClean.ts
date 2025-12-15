@@ -1,12 +1,11 @@
-import { useState, useEffect, useCallback } from 'react';
-import { Message, SendMessageRequest, User, Conversation } from '@/domain/chat/chat.entity';
-import { Result } from '@/domain/common/result';
+import { useState, useCallback } from 'react';
+import { Message, SendMessageRequest, User, Conversation } from '@/domain/chat/chat.entity'; 
 import { sendMessageUseCase, getMessagesUseCase } from '@/infrastructure/di/container';
 
 export function useChatClean() {
-  const [conversations, setConversations] = useState<Conversation[]>([]);
+  const [conversations] = useState<Conversation[]>([]);
   const [messages, setMessages] = useState<Record<number, Message[]>>({});
-  const [users, setUsers] = useState<User[]>([]);
+  const [users] = useState<User[]>([]);
   const [currentConversationId, setCurrentConversationId] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
