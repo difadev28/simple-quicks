@@ -100,8 +100,8 @@ src/
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/simple-quicks2.git
-   cd simple-quicks2
+   git clone https://github.com/difadev28/simple-quicks.git
+   cd simple-quicks
    ```
 
 2. **Install dependencies**
