@@ -1,73 +1,359 @@
-# React + TypeScript + Vite
+# Simple QuickS2 - Task & Chat Management App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern React application built with TypeScript, implementing Clean Architecture principles for scalable and maintainable code.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Task Management**
+  - Create, read, update, and delete tasks
+  - Toggle task completion status
+  - Filter tasks by category, priority, and tags
+  - Optimistic updates for better UX
 
-## React Compiler
+- **Chat System**
+  - Real-time messaging interface
+  - Conversation management
+  - User management
+  - Message history and search
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Clean Architecture**
+  - Separation of concerns
+  - Testable and maintainable code
+  - Dependency injection
+  - Domain-driven design
 
-## Expanding the ESLint configuration
+## 🏗️ Architecture Overview
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+This project follows **Clean Architecture** principles by Uncle Bob, ensuring your business logic is independent of frameworks and external concerns.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+┌─────────────────────────────────────────────────────────────┐
+│                            UI                              │
+│                    (React Components)                      │
+└─────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────┐
+│                  Interface Adapters                         │
+│               (Hooks, Controllers, Presenters)              │
+└─────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────┐
+│                Application Business Rules                   │
+│                     (Use Cases)                            │
+└─────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────┐
+│                       Enterprise Rules                     │
+│                      (Domain Entities)                      │
+└─────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────┐
+│                  Frameworks & Drivers                       │
+│                (External Interfaces)                        │
+└─────────────────────────────────────────────────────────────┘
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 📁 Project Structure
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
 ```
+src/
+├── application/           # Application Business Rules
+│   ├── interfaces/        # Repository interfaces
+│   └── usecases/         # Use cases for each feature
+│
+├── domain/               # Enterprise Rules
+│   ├── chat/            # Chat domain entities
+│   ├── common/          # Common domain utilities
+│   └── task/            # Task domain entities
+│
+├── infrastructure/       # Frameworks & Drivers
+│   ├── di/              # Dependency Injection Container
+│   ├── http/            # HTTP Client implementation
+│   └── repositories/    # Repository implementations
+│
+├── hooks/               # Interface Adapters
+│   ├── useTasksClean.ts # Clean task management hook
+│   └── useChatClean.ts  # Clean chat management hook
+│
+├── providers/           # React Providers
+│   └── CleanArchitectureProvider.tsx
+│
+└── components/          # UI Components
+    ├── chat/           # Chat-related components
+    └── task/           # Task-related components
+```
+
+## 🛠️ Tech Stack
+
+- **Frontend**: React 18 with TypeScript
+- **Build Tool**: Vite
+- **Styling**: Tailwind CSS
+- **HTTP Client**: Custom implementation with interceptors
+- **State Management**: React Hooks + Context API
+- **Architecture**: Clean Architecture (Uncle Bob)
+
+## 📦 Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/your-username/simple-quicks2.git
+   cd simple-quicks2
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Start development server**
+   ```bash
+   npm run dev
+   ```
+
+4. **Build for production**
+   ```bash
+   npm run build
+   ```
+
+5. **Preview production build**
+   ```bash
+   npm run preview
+   ```
+
+## 🎯 Usage Examples
+
+### Using Clean Architecture Hooks
+
+```typescript
+// Task Management
+import { useTasksClean } from '@/hooks/useTasksClean';
+
+function TaskComponent() {
+  const {
+    tasks,
+    isLoading,
+    error,
+    createTask,
+    toggleTaskCompletion
+  } = useTasksClean();
+
+  const handleCreateTask = async (title: string) => {
+    const success = await createTask({ title });
+    if (success) {
+      console.log('Task created successfully');
+    }
+  };
+
+  const handleToggleComplete = async (taskId: number) => {
+    const success = await toggleTaskCompletion(taskId);
+    if (success) {
+      console.log('Task status updated');
+    }
+  };
+
+  return (
+    <div>
+      {/* Your task UI */}
+    </div>
+  );
+}
+
+// Chat System
+import { useChatClean } from '@/hooks/useChatClean';
+
+function ChatComponent() {
+  const {
+    currentMessages,
+    sendMessage,
+    selectConversation
+  } = useChatClean();
+
+  const handleSendMessage = async (text: string) => {
+    await sendMessage({
+      conversationId: 1,
+      text,
+      sender: 'user'
+    });
+  };
+
+  return (
+    <div>
+      {/* Your chat UI */}
+    </div>
+  );
+}
+```
+
+### Dependency Injection
+
+The project uses a DI container to manage dependencies:
+
+```typescript
+import { container } from '@/infrastructure/di/container';
+
+// Get use cases
+const getTasksUseCase = container.getGetTasksUseCase();
+const createTaskUseCase = container.getCreateTaskUseCase();
+
+// Get repositories
+const taskRepository = container.getTaskRepository();
+```
+
+### Error Handling
+
+All operations return a `Result` type for consistent error handling:
+
+```typescript
+import { fold } from '@/domain/common/result';
+
+const result = await someUseCase.execute();
+
+fold(
+  result,
+  (data) => console.log('Success:', data),
+  (error) => console.error('Error:', error.message)
+);
+```
+
+## 🧪 Testing
+
+The Clean Architecture makes testing easy and isolated:
+
+```typescript
+// Example: Testing a use case
+import { GetTasksUseCase } from '@/application/usecases/task/get-tasks.usecase';
+import { MockTaskRepository } from '@/__tests__/mocks/MockTaskRepository';
+
+test('should get tasks successfully', async () => {
+  const mockRepo = new MockTaskRepository();
+  const getTasksUseCase = new GetTasksUseCase(mockRepo);
+
+  const result = await getTasksUseCase.execute();
+
+  expect(result.isSuccess).toBe(true);
+  expect(result.value).toHaveLength(expectedLength);
+});
+```
+
+## 🔧 Configuration
+
+### Path Aliases
+
+The project uses `@/` as an alias for the `src/` directory:
+
+```typescript
+import { Task } from '@/domain/task/task.entity';
+import { GetTasksUseCase } from '@/application/usecases/task/get-tasks.usecase';
+```
+
+### Environment Variables
+
+Create a `.env` file in the root directory:
+
+```env
+VITE_API_BASE_URL=https://your-api-url.com
+VITE_API_TIMEOUT=10000
+```
+
+## 📝 API Integration
+
+The app integrates with JSONPlaceholder for demo purposes:
+
+- **Tasks API**: `https://jsonplaceholder.typicode.com/todos`
+- **Users API**: `https://jsonplaceholder.typicode.com/users`
+- **Comments API**: `https://jsonplaceholder.typicode.com/comments` (used as mock messages)
+
+## 🎨 Styling
+
+The project uses Tailwind CSS for styling. Custom configurations are in:
+
+- `tailwind.config.js` - Tailwind configuration
+- `src/index.css` - Global styles and Tailwind imports
+
+## 🚀 Deployment
+
+### Build for Production
+
+```bash
+npm run build
+```
+
+The build artifacts will be stored in the `dist/` directory.
+
+### Deploy to Vercel
+
+```bash
+npm install -g vercel
+vercel --prod
+```
+
+### Deploy to Netlify
+
+```bash
+npm run build
+# Upload the dist/ folder to Netlify
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Commit your changes: `git commit -m 'Add amazing feature'`
+4. Push to the branch: `git push origin feature/amazing-feature`
+5. Open a Pull Request
+
+## 📋 Code Style
+
+This project follows:
+
+- **ESLint** for linting
+- **Prettier** for formatting
+- **TypeScript** strict mode
+- **Clean Architecture** principles
+
+### Pre-commit Hooks
+
+The project uses Husky for Git hooks:
+
+```bash
+npm run prepare  # Install hooks
+```
+
+## 📚 Documentation
+
+- [Clean Architecture Guide](./CLEAN_ARCHITECTURE.md) - Detailed explanation of the architecture implementation
+- [API Documentation](./docs/api.md) - API endpoints and integration guide
+- [Component Library](./docs/components.md) - UI component documentation
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+1. **TypeScript errors**: Run `npm run build` to check for type errors
+2. **Import errors**: Ensure path aliases are configured correctly
+3. **Build issues**: Clear the build cache: `rm -rf node_modules/.cache`
+
+### Getting Help
+
+- Open an issue on GitHub
+- Check the [documentation](./docs/)
+- Review the [Clean Architecture guide](./CLEAN_ARCHITECTURE.md)
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Uncle Bob (Robert C. Martin) for Clean Architecture principles
+- React team for the amazing framework
+- Vercel team for the blazing-fast build tool
+- Tailwind CSS team for utility-first CSS framework
+
+---
+
+Built with ❤️ using Clean Architecture principles
