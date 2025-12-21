@@ -22,6 +22,10 @@ module.exports = {
     "!src/main.tsx"
   ],
   setupFilesAfterEnv: ["<rootDir>/src/test/setup.ts"],
+  globals: {
+    TextEncoder: require('util').TextEncoder,
+    TextDecoder: require('util').TextDecoder,
+  },
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src/$1"
   },

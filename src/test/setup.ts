@@ -1,7 +1,8 @@
 import '@testing-library/jest-dom'
 
 // Polyfill for TextEncoder/TextDecoder for React Router
-import { TextEncoder, TextDecoder } from 'util';
+const { TextEncoder, TextDecoder } = require('util');
 
-global.TextEncoder = TextEncoder;
-global.TextDecoder = TextDecoder;
+// Set global polyfills before tests run
+(global as any).TextEncoder = TextEncoder;
+(global as any).TextDecoder = TextDecoder;

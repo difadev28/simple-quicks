@@ -41,7 +41,7 @@ const mockGroupConversation: Conversation = {
 };
 
 describe('ChatListItem', () => {
-    const formatTime = (date: string) => '10:00';
+    const formatTime = (_date: string) => '10:00';
 
     const renderWithRouter = (component: React.ReactElement) => {
         return render(
