@@ -1,0 +1,60 @@
+name: React CI Pipeline + SonarCloud
+
+on:
+  push:
+    branches:
+      - main
+      - development
+  pull_request:
+    branches:
+      - main
+      - development
+
+jobs:
+  build-test-sonar:
+    name: Build, Test & Sonar Analysis
+    runs-on: ubuntu-latest
+
+    steps:
+      # =========================================
+      # 1️⃣ Checkout source code
+      # =========================================
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # WAJIB untuk Sonar PR decoration & blame
+
+      # =========================================
+      # 2️⃣ Setup Node.js
+      # =========================================
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+
+      # =========================================
+      # 3️⃣ Install dependencies
+      # =========================================
+      - name: Install dependencies
+        run: npm ci
+
+      # =========================================
+      # 4️⃣ Run unit test + coverage
+      # =========================================
+      - name: Run tests with coverage
+        run: npm run test:coverage
+
+      # =========================================
+      # 5️⃣ Build React app
+      # =========================================
+      - name: Build project
+        run: npm run build
+
+      # =========================================
+      # 6️⃣ SonarCloud analysis
+      # =========================================
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
