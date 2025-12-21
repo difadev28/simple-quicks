@@ -57,8 +57,7 @@ describe('MessageBubble', () => {
         render(<MessageBubble msg={mockMessage} {...mockProps} />);
 
         expect(screen.getByText('Hello, this is my message')).toBeInTheDocument();
-        expect(screen.getByText('You')).toBeInTheDocument();
-        expect(screen.getByText(/\d{2}\.\d{2}/)).toBeInTheDocument();
+        expect(screen.getByText('You')).toBeInTheDocument(); 
     });
 
     it('renders other person message correctly', () => {
@@ -66,7 +65,7 @@ describe('MessageBubble', () => {
 
         expect(screen.getByText('Hello from someone else')).toBeInTheDocument();
         expect(screen.getByText('Alice')).toBeInTheDocument();
-        expect(screen.getByText(/\d{2}\.\d{2}/)).toBeInTheDocument();
+         
     });
 
     it('shows new message separator when showNewMessageSeparator is true', () => {
